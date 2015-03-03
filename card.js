@@ -271,7 +271,9 @@ module.exports = function( options ) {
       else {
         cardent.load$(parentid, function (err, parentcard) {
           if (err) return done(err);
-          if (!parentcard) return done(seneca.fail('parent-card-not-found', {id: parentid}));
+          if (!parentcard) {
+            return card.remove$(done)
+          }
 
           parentcard.children = _.filter(parentcard.children, function (child) {
             return child !== content.id
